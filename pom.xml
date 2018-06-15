@@ -35,4 +35,5 @@
         </dependency>
     </dependencies>
 
+    <!--打包是尽量不带上已有的jar包 -->
 </project>
