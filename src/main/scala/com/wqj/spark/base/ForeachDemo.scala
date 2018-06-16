@@ -12,7 +12,9 @@ object ForeachDemo {
     //local[2]代表两个线程
     val conf =new SparkConf().setAppName("ForeachDemo").setMaster("local")
     val sc =new SparkContext(conf)
-    val rdd1 =sc.parallelize(List(1,2,3,4,5,6,7,8,9))
+    val rdd1 =sc.parallelize(List(1,2,3,4,5,6,7,
+
+      8,9))
     rdd1.foreach(x=>{
       println(x)
     })
