@@ -13,7 +13,9 @@ object ForeachDemo {
     val conf =new SparkConf().setAppName("ForeachDemo").setMaster("local")
     val sc =new SparkContext(conf)
     val rdd1 =sc.parallelize(List(1,2,3,4,5,6,7,8,9))
-    rdd1.foreach(x=>print(_))
+    rdd1.foreach(x=>{
+      println(x)
+    })
 
     //业务上可以添加至数据库中
     sc.stop()
