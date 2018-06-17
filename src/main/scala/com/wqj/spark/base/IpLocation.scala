@@ -7,7 +7,7 @@ import org.apache.spark.{SparkConf, SparkContext}
   * @Date: 2018/6/17 22:26
   * @Description:
   */
-class IpLocation {
+object IpLocation {
   def ip2Long(ip: String): Long = {
     val fragments = ip.split("[.]")
     var ipNum = 0L
@@ -38,21 +38,23 @@ class IpLocation {
     val conf = new SparkConf().setMaster("local[2]").setAppName("IpLocation")
     val sc = new SparkContext(conf)
 
-    val ipRulesRdd = sc.textFile("c://ip.txt").map(line =>{
+
+    //加载规则
+    val ipRulesRdd = sc.textFile("d://input//ip.txt").map(line =>{
       val fields = line.split("\\|")
       val start_num = fields(2)
       val end_num = fields(3)
       val province = fields(6)
       (start_num, end_num, province)
     })
-    //全部的ip映射规则
+    //全部的ip映射规则,只在driver中有 就是master中有
     val ipRulesArrary = ipRulesRdd.collect()
 
-    //广播规则
+    //广播规则,从master广播到所有的work上
     val ipRulesBroadcast = sc.broadcast(ipRulesArrary)
 
     //加载要处理的数据
-    val ipsRDD = sc.textFile("c://access_log").map(line => {
+    val ipsRDD = sc.textFile("d://input//20090121000132.394251.http.format").map(line => {
       val fields = line.split("\\|")
       fields(1)
     })
@@ -61,7 +63,7 @@ class IpLocation {
       val ipNum = ip2Long(ip)
       val index = binarySearch(ipRulesBroadcast.value, ipNum)
       val info = ipRulesBroadcast.value(index)
-      info
+      (ip,info)
     })
 
     println(result.collect().toBuffer)
