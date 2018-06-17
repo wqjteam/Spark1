@@ -26,7 +26,9 @@ object IpSearchDemo {
     var flag = true
     val lines = new ArrayBuffer[(String, String, String)]()
     for (x <- br.getLines()) {
-      val a = x.split("|")
+      //转义 \
+      val a = x.split("\\|")
+      print((a(2),a(3),x))
       lines += ((a(2),a(3),x))
     }
     lines
