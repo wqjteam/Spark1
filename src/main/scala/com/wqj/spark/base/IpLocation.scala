@@ -1,5 +1,6 @@
 package com.wqj.spark.base
 
+import com.wqj.spark.MySqlUtil
 import org.apache.spark.{SparkConf, SparkContext}
 
 /**
@@ -50,7 +51,7 @@ object IpLocation {
     //全部的ip映射规则,只在driver中有 就是master中有
     val ipRulesArrary = ipRulesRdd.collect()
 
-    //广播规则,从master广播到所有的work上
+    //广播规则,从master广播到所有的work上 存储到内存上
     val ipRulesBroadcast = sc.broadcast(ipRulesArrary)
 
     //加载要处理的数据
@@ -66,7 +67,11 @@ object IpLocation {
       (ip,info)
     })
 
-    println(result.collect().toBuffer)
+    //计算 那个省份上网的频率高
+    val shenfenresult=result.map(x=>{
+      (x._2._3,1)
+    }).reduceByKey(_+_).sortBy(x=>x._2,false).collect()
+    MySqlUtil.myFun(shenfenresult.iterator)
 
     sc.stop()
 

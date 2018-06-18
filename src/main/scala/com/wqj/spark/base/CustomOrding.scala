@@ -56,5 +56,5 @@ object CustomOrding {
 
 //隐式转换完成
 case class Girl(val faceValue: Int, val age: Int) extends Serializable{
-  0
+
 }
