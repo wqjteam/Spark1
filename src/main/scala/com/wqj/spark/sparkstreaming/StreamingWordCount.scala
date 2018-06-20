@@ -13,7 +13,7 @@ object StreamingWordCount {
   def main(args: Array[String]): Unit = {
     val conf =new SparkConf().setAppName("StreamingWordCount").setMaster("local[2]");
     val sc=new SparkContext(conf)
-    //后面的数据为延迟数
+    //后面的数 据为延迟数
     val ssc =new StreamingContext(sc,Seconds(5))
     //接收数据
     val ds=ssc.socketTextStream("master",7777)
