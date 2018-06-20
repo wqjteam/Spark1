@@ -26,6 +26,7 @@ object SqlDemo {
   val df1= rdd2.toDF()
   df1.registerTempTable("person_table")
     println(sqlContext.sql("select * from person_table ").show())
+    println(sqlContext.sql("select * from person_table ").toJSON)
 //  println(sqlContext.sql("select * from person_table order by age desc limit 2").show())
   }
 }
