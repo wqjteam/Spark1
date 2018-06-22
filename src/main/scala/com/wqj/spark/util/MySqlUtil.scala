@@ -1,8 +1,9 @@
-package com.wqj.spark
+package com.wqj.spark.util
 
+import java.sql.{Connection, DriverManager, PreparedStatement}
 
-import java.sql.{Connection, Date, DriverManager, PreparedStatement}
-
+import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
+import org.apache.spark.sql.{Row, SQLContext}
 import org.apache.spark.{SparkConf, SparkContext}
 
 
@@ -41,21 +42,22 @@ object MySqlUtil {
     }
   }
 
-//  def insert(): Unit ={
-//    val sc = new SparkContext
-//    val sqlContext = new SQLContext(sc)
-//    import sqlContext.implicits._
+  def insert(): Unit ={
+    val sc = new SparkContext
+    val sqlContext = new SQLContext(sc)
+
+
+    val data = sc.parallelize(List((1,"name1"),(2,"name2"),(3,"name3"),(4,"name4"))).
+      map(item=>Row.apply(item._1,item._2))
+
+    val schema = StructType(StructField("id", IntegerType)::StructField("name", StringType):: Nil)
+    val df = sqlContext.createDataFrame(data,schema)
+
+    val url="jdbc:mysql://172.16.3.66:3306/data_kanban?user=root&password=dataS@baihe!"
 //
-//    val data = sc.parallelize(List((1,"name1"),(2,"name2"),(3,"name3"),(4,"name4"))).
-//      map(item=>Row.apply(item._1,item._2))
-//
-//    val schema = StructType(StructField("id", IntegerType)::StructField("name", StringType):: Nil)
-//    val df = sqlContext.createDataFrame(data,schema)
-//
-//    val url="jdbc:mysql://172.16.3.66:3306/data_kanban?user=root&password=dataS@baihe!"
 //    df.createJDBCTable(url, "table1", false)//创建表并插入数据
 //    df.insertIntoJDBC(url,"table1",false)//插入数据   false为不覆盖之前数据
-//  }
+  }
   def main(args: Array[String]) {
     val conf = new SparkConf().setAppName("RDDToMysql").setMaster("local")
     val sc = new SparkContext(conf)
