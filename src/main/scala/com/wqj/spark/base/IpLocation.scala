@@ -1,6 +1,6 @@
 package com.wqj.spark.base
 
-import com.wqj.spark.MySqlUtil
+import com.wqj.spark.util.MySqlUtil
 import org.apache.spark.{SparkConf, SparkContext}
 
 /**
