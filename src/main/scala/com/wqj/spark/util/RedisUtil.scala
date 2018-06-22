@@ -10,16 +10,23 @@ import redis.clients.jedis.JedisPool
   */
 object RedisUtil extends Serializable {
 
-    val redisHost = "master"
-    val redisPort = 6379
-    val redisTimeout = 30000
-    lazy val pool = new JedisPool(new GenericObjectPoolConfig(), redisHost, redisPort, redisTimeout)
+  val redisHost = "master"
+  val redisPort = 6379
+  val redisTimeout = 30000
+  val password = "123456"
+  lazy val pool = new JedisPool(new GenericObjectPoolConfig(), redisHost, redisPort, redisTimeout, password)
 
-    lazy val hook = new Thread {
-      override def run = {
-        println("Execute hook thread: " + this)
-        pool.destroy()
-      }
+  lazy val hook = new Thread {
+    override def run = {
+      println("Execute hook thread: " + this)
+      pool.destroy()
     }
-    sys.addShutdownHook(hook.run)
+  }
+  sys.addShutdownHook(hook.run)
+
+  def main(args: Array[String]): Unit = {
+    val jedis = RedisUtil.pool.getResource
+    jedis.select(3);
+    jedis.set("qwe", "hahaha")
+  }
 }
