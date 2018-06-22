@@ -1,5 +1,6 @@
 package com.wqj.spark.sparkstreaming
 
+import com.wqj.spark.util.RedisUtil
 import org.apache.spark.{HashPartitioner, SparkConf}
 import org.apache.spark.streaming.kafka.KafkaUtils
 import org.apache.spark.streaming.{Seconds, StreamingContext}
@@ -20,12 +21,6 @@ object KafkaWC {
   def main(args: Array[String]): Unit = {
     val Array(zkQuorm, group, topics, numThreads) = args
     val conf = new SparkConf().setAppName("KafkaWC").setMaster("local[2]")
-
-    //设置redis的相关配置
-    conf.set("redis.port","master")
-    conf.set("redis.port","6379") //如果不填 默认6379
-    conf.set("redis.password","123456")
-
     val ssc = new StreamingContext(conf, Seconds(5))
     //streaming需要指定地址
     ssc.checkpoint("e://checkpoint")
@@ -41,11 +36,17 @@ object KafkaWC {
    // wordCounts.print()
 
     //准备将数据存入redis中
-    wordCounts.mapPartitions(x=>{
-      x.map(y=>{
-
-      })
+    wordCounts.foreachRDD(x=>{
+      x.foreachPartition(y=>{
+        val jedis=RedisUtil.pool.getResource
+        jedis.select(3);
+        y.foreach(z=>{
+          print("进入到方法中2")
+          jedis.set(z._1,z._2.toString)
+        })
     })
+    })
+    wordCounts.print();
     ssc.start()
 
     ssc.awaitTermination()
