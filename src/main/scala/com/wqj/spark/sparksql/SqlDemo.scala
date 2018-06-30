@@ -16,7 +16,8 @@ object SqlDemo {
   val conf = new SparkConf().setAppName("SqlDemo").setMaster("local[2]")
   val sc = new SparkContext(conf);
   val sqlContext = new SQLContext(sc)
-  val rdd1 = sc.parallelize(Array(("zhangsan", 1), ("lisi", 2), ("wangwu", 3), ("zhaoliu", 4), ("liqi", 5)))
+  val rdd1 = sc.parallelize(Array(("zhangsan", 1), ("lisi", 2), ("wangwu", 3), ("zhaoli" +
+    "u", 4), ("liqi", 5)))
   val rdd2 = rdd1.map(x => {
     Person(x._1, x._2)
   })
