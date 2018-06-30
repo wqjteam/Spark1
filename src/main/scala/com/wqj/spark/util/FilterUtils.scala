@@ -14,7 +14,7 @@ import org.apache.commons.lang3.time.FastDateFormat
   */
 object FilterUtils {
 
-  val sdf=new FastDateFormat("yyyy年MM月dd日,E,HH:MM:ss")
+  val sdf=new FastDateFormat("yyyy年mm月dd日,E,HH:MM:ss")
   def filterByTime(fields:Array[String],startTime:Long,endTime: Long):Boolean={
 //val sdf=new SimpleDateFormat("yyyy年MM月dd日,E,HH:MM:ss")
     val time=sdf.parse(fields(1)).getTime
