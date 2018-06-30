@@ -11,7 +11,7 @@ object TimeUtils {
 
   def DateStringToLong(dateString:String):Long={
 
-    val sdf=new SimpleDateFormat("yyyy年MM月dd日,E,HH:MM:ss")
+    val sdf=new SimpleDateFormat("yyyy-mm-dd HH:MM:ss")
     sdf.parse(dateString).getTime
   }
 }
