@@ -9,12 +9,18 @@ import redis.clients.jedis.JedisPool
   * @Description:
   */
 object RedisUtil extends Serializable {
-
+  val conf= new GenericObjectPoolConfig()
+  //最大连接数
+  conf.setMaxTotal(10)
+  //最大空闲连接数
+  conf.setMaxIdle(5)
+  //调用boeeow Object时,进行检查
+  conf.setTestOnBorrow(true)
   val redisHost = "kafka"
   val redisPort = 6379
   val redisTimeout = 30000
   val password = "123456"
-  lazy val pool = new JedisPool(new GenericObjectPoolConfig(), redisHost, redisPort, redisTimeout, password)
+  lazy val pool = new JedisPool(conf, redisHost, redisPort, redisTimeout, password)
 
   lazy val hook = new Thread {
     override def run = {
