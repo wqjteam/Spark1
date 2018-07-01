@@ -18,6 +18,7 @@ object PluginScann {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf().setAppName("PluginScann").setMaster("local[3]")
     conf.set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+    conf.set("auto.offset.reset", "smallest")
     val sc = new SparkContext(conf)
     val ssc = new StreamingContext(sc, Seconds(10))
     sc.setCheckpointDir("e://checkpoint")
@@ -26,10 +27,16 @@ object PluginScann {
     //_.1为patitioner的下标_._2为partitioner中的数据
    //@return DStream of (Kafka message key, Kafka message value)
     val lines=stream.map(x=>{
-      println(x._1,x._2)
+      println("数据为key:"+x._1,"数据的value为:"+x._2)
       x._2
     })
-    lines.print()
+    val beforeData = lines.map(_.split("/t"))
+    val afterdate=beforeData.filter(f=>{
+     val et= f(3)
+      val item=f(8)
+      et.equals("11")&&item.equals("强效太阳水")
+    })
+    afterdate.print()
     ssc.start()
     ssc.awaitTermination()
     print("11")
