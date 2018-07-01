@@ -1,7 +1,7 @@
 package com.wqj.spark.util
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig
-import redis.clients.jedis.JedisPool
+import redis.clients.jedis.{Jedis, JedisPool}
 
 /**
   * @Auther: wqj
@@ -29,6 +29,13 @@ object RedisUtil extends Serializable {
     }
   }
   sys.addShutdownHook(hook.run)
+
+
+
+  def getConnection():Jedis={
+    pool.getResource
+  }
+
 
   def main(args: Array[String]): Unit = {
     val jedis = RedisUtil.pool.getResource
