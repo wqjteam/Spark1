@@ -31,11 +31,11 @@ object GameKpi {
     println("新增用户"+dnu)
 
     //计算日活跃用户
-    val drn = cacheDate.filter(x => {
-      (!x(0).equals(EventType.REGISTER) && !x(0).equals(EventType.REGISTER))
-    }).map((_ (3))).distinct().count()
-
-    println("日活跃用户"+dnu)
+//    val drn = cacheDate.filter(x => {
+//      (!x(0).equals(EventType.REGISTER) && !x(0).equals(EventType.REGISTER))
+//    }).map((_ (3))).distinct().count()
+//
+//    println("日活跃用户"+dnu)
 
 
 
@@ -46,7 +46,7 @@ object GameKpi {
         .map((_(3)->1)).distinct()
     val ci=beforenumber.join(todaynumber)
 
-    val cl=ci.count() / beforenumber.count()
+    val cl=(ci.count().toFloat / beforenumber.count().toFloat)
     println("次日留存率"+cl)
   }
 }
