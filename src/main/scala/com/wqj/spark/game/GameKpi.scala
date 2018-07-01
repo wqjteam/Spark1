@@ -27,8 +27,12 @@ object GameKpi {
 
 
     //计算日活跃用户
-
+    val drn=cacheDate.filter(x=>{
+     val a= (!x(0).equals(EventType.REGISTER) && !x(0).equals(EventType.REGISTER))
+      a
+    }).map((_(3))).distinct().count()
     print(dnu)
+    print(drn)
 
   }
 }
