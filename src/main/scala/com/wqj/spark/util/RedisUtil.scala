@@ -10,7 +10,7 @@ import redis.clients.jedis.JedisPool
   */
 object RedisUtil extends Serializable {
 
-  val redisHost = "master"
+  val redisHost = "kafka"
   val redisPort = 6379
   val redisTimeout = 30000
   val password = "123456"
