@@ -65,12 +65,15 @@ object PluginScann {
     })
     kaiguadata.foreachRDD(x=>{
       x.foreachPartition(y=>{
+        //一个循环开始
         val jedis=RedisUtil.getConnection()
         jedis.select(3);
         y.foreach(z=>{
           print("进入到方法中2")
           jedis.set(z._1,z._2.toString)
         })
+        //一个循环完毕后 关了连接
+        jedis.close()
       })
     })
 
