@@ -22,7 +22,12 @@ object PluginScann {
     val ssc = new StreamingContext(sc, Seconds(10))
     sc.setCheckpointDir("e://checkpoint")
     val map= Map(("test"-> 3));
-    val stream=KafkaUtils.createStream(ssc, "kafka:2181", "local",map,StorageLevel.MEMORY_AND_DISK_SER)
+    val kafkaParams = Map[String, String](
+      "zookeeper.connect" -> "kafka:2181",
+      "group.id" -> "local",
+      "auto.offset.reset" -> "smallest"
+    )
+    val stream=KafkaUtils.createStream(ssc,kafkaParams ,map,StorageLevel.MEMORY_AND_DISK_SER)
     //_.1为patitioner的下标_._2为partitioner中的数据
    //@return DStream of (Kafka message key, Kafka message value)
     val lines=stream.map(x=>{
