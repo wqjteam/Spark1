@@ -2,7 +2,7 @@ package com.wqj.spark.game
 
 import java.util
 
-import com.wqj.spark.util.TimeUtils
+import com.wqj.spark.util.{RedisUtil, TimeUtils}
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.kafka.KafkaUtils
 import org.apache.spark.streaming.{Seconds, StreamingContext}
