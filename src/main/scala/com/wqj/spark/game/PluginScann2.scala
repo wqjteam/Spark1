@@ -71,7 +71,7 @@ object PluginScann2 {
         jedis.select(3);
         y.foreach(z => {
           print("进入到方法中2")
-          jedis.set(z._1, z._2.toString)
+          jedis.set(z._1+":"+System.currentTimeMillis(), z._2.toString)
         })
         //一个循环完毕后 关了连接
         jedis.close()
