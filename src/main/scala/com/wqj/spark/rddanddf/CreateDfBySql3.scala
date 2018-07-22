@@ -45,6 +45,7 @@ object CreateDfBySql3 {
     //    val frame: DataFrame = session.read.json("output/json/part-00000-3f546ece-2d45-444c-95e8-9dc2e941b15a.json")
     //    print(frame.show())
     val dataFrame: DataFrame = df.join(df2,df("uuid").equalTo(df2("uuid")))
-     print(dataFrame.groupBy(df("phonenumber"),df2("uuid")))
+    val frame1: DataFrame = dataFrame.groupBy(df("phonenumber"),df2("uuid")).sum("i")
+    frame1.show()
   }
 }
