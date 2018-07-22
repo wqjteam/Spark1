@@ -43,6 +43,6 @@ object CreateDfBySql {
       Row(2, "Second Value", java.sql.Date.valueOf("2010-02-01"))
     ))
     val df: DataFrame = session.createDataFrame(rdd, schema)
-    print(rdd.collect())
+    print(df.show())
   }
 }
