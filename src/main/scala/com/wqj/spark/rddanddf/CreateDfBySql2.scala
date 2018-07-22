@@ -25,9 +25,8 @@ object CreateDfBySql2 {
     })
 
     val df: DataFrame = session.createDataFrame(rdd, schema)
-//    df.select("phonenumber","time").write.json("output/json")
-
-    val frame: DataFrame = session.read.json("output/json/part-00000-3f546ece-2d45-444c-95e8-9dc2e941b15a.json")
-    print(frame.show())
+    df.select(df("phonenumber").as("ph"),df("time")).write.json("output/json")
+//    val frame: DataFrame = session.read.json("output/json/part-00000-3f546ece-2d45-444c-95e8-9dc2e941b15a.json")
+//    print(frame.show())
   }
 }
