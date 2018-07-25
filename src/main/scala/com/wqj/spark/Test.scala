@@ -12,4 +12,6 @@ object Test extends App {
   var a=ArrayBuffer[(Int,Int)]()
   a+=((1,1))
   println(a.toBuffer)
+
+  val c=1
 }
