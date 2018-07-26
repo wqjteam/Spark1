@@ -17,6 +17,7 @@ public class LruCache<K, V> {
 
     public LruCache(int cacheSize) {
         MAX_CACHE_SIZE = cacheSize;
+        //取最大的值
         int capacity = (int)Math.ceil(MAX_CACHE_SIZE / DEFAULT_LOAD_FACTORY) + 1;
         /*
          * 第三个参数设置为true，代表linkedlist按访问顺序排序，可作为LRU缓存
