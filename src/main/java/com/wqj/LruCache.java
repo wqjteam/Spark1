@@ -18,17 +18,22 @@ public class LruCache<K, V> {
     public LruCache(int cacheSize) {
         MAX_CACHE_SIZE = cacheSize;
         //取最大的值
-        int capacity = (int)Math.ceil(MAX_CACHE_SIZE / DEFAULT_LOAD_FACTORY) + 1;
+        int capacity = (int) Math.ceil(MAX_CACHE_SIZE / DEFAULT_LOAD_FACTORY) + 1;
         /*
          * 第三个参数设置为true，代表linkedlist按访问顺序排序，可作为LRU缓存
          * 第三个参数设置为false，代表按插入顺序排序，可作为FIFO缓存
          */
-        map = new LinkedHashMap<K, V>(capacity, DEFAULT_LOAD_FACTORY, false) {
+        map = new LinkedHashMap<K, V>(capacity, DEFAULT_LOAD_FACTORY, true) {
             @Override
             protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
-                return size() > MAX_CACHE_SIZE;
+                boolean r = size() > MAX_CACHE_SIZE;
+                if (r) {
+                    System.out.println("清除缓存key：" + eldest.getKey());
+                }
+                return r;
             }
         };
+
     }
 
     public synchronized void put(K key, V value) {

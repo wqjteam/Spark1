@@ -1,13 +1,30 @@
 package com.wqj;
 
+import sun.applet.Main;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * @Auther: wqj
- * @Date: 2018/7/26 10:59
+ * @Date: 2018/7/26 15:40
  * @Description:
  */
-public class JavaLru {
+public class LruCache2<K, V> extends LinkedHashMap<K, V> {
+    private int cacheSize;
+    public LruCache2(int max) {
+        super(max,0.75F,true);
+        this.cacheSize=max;
+    }
+
+    @Override
+    protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
+
+        return this.size()>cacheSize;
+    }
+
     public static void main(String[] args) {
-        LruCache<String, String> cache = new LruCache<String, String>(5);
+        LruCache2<String, String> cache = new LruCache2<String, String>(5);
         cache.put("1", "1");
         cache.put("2", "2");
         cache.put("3", "3");
