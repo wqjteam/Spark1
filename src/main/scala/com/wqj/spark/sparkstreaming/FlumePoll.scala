@@ -23,7 +23,7 @@ object FlumePoll {
       iter.map{ case(word, current_count, history_count) => (word, current_count.sum + history_count.getOrElse(0)) }
     }
 
-    val conf = new SparkConf().setAppName("FlumePoll").setMaster("local[2]")
+    val conf = new SparkConf().setAppName("FlumePoll").set("spark.streaming.stopGracefullyOnShutdown","true").setMaster("local[2]")
     val ssc = new StreamingContext(conf, Seconds(5))
 
     //推送方式: spark向flume中拉取送数据

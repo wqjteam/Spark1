@@ -44,7 +44,7 @@ object DirectKafkaWordCount {
 
     // Create context with 2 second batch interval
     val sparkConf = new SparkConf().setAppName("DirectKafkaWordCount")
-    sparkConf.setMaster("local[*]")
+    sparkConf.setMaster("local[*]").set("spark.streaming.stopGracefullyOnShutdown","true")
     sparkConf.set("spark.streaming.kafka.maxRatePerPartition", "5")
     sparkConf.set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
 

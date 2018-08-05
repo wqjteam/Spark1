@@ -11,7 +11,7 @@ import org.apache.spark.streaming.{Seconds, StreamingContext}
 object StreamingWordCount {
 
   def main(args: Array[String]): Unit = {
-    val conf =new SparkConf().setAppName("StreamingWordCount").setMaster("local[2]");
+    val conf =new SparkConf().set("spark.streaming.stopGracefullyOnShutdown","true").setAppName("StreamingWordCount").setMaster("local[2]");
     val sc=new SparkContext(conf)
     //后面的数 据为延迟数
     val ssc =new StreamingContext(sc,Seconds(5))

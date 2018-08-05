@@ -22,7 +22,7 @@ object GroupWordCount {
     iter.map{ case(word, current_count, history_count) => (word, current_count.sum + history_count.getOrElse(0)) }
   }
   def main(args: Array[String]): Unit = {
-    val conf =new SparkConf().setAppName("GroupWordCount").setMaster("local[2]");
+    val conf =new SparkConf().set("spark.streaming.stopGracefullyOnShutdown","true").setAppName("GroupWordCount").setMaster("local[2]");
     val sc=new SparkContext(conf)
     //使用updateStateByKey 必须设置checkpoint
     sc.setCheckpointDir("e://checkpoint")

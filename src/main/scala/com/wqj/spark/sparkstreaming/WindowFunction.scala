@@ -10,7 +10,9 @@ import org.apache.spark.streaming.{Milliseconds, Seconds, StreamingContext}
   */
 object WindowFunction {
   def main(args: Array[String]) {
-    val conf = new SparkConf().setAppName("WindowOpts").setMaster("local[2]")
+    //优雅停机
+    //.set("spark.streaming.stopGracefullyOnShutdown","true")
+    val conf = new SparkConf().setAppName("WindowOpts").set("spark.streaming.stopGracefullyOnShutdown","true").setMaster("local[2]")
     //毫秒数 更加精细
     val ssc = new StreamingContext(conf, Milliseconds(5000))
     val lines = ssc.socketTextStream("master", 7777)

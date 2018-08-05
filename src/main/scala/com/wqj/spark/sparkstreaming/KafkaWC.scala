@@ -20,7 +20,7 @@ object KafkaWC {
 
   def main(args: Array[String]): Unit = {
     val Array(zkQuorm, group, topics, numThreads) = args
-    val conf = new SparkConf().setAppName("KafkaWC").setMaster("local[2]")
+    val conf = new SparkConf().setAppName("KafkaWC").set("spark.streaming.stopGracefullyOnShutdown","true").setMaster("local[2]")
     val ssc = new StreamingContext(conf, Seconds(5))
     //streaming需要指定地址
     ssc.checkpoint("e://checkpoint")
