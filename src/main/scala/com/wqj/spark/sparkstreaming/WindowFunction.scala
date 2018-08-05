@@ -20,7 +20,7 @@ object WindowFunction {
     //第一个参数Seconds(10)是滑动时间间隔  滑动时间间隔  和时间长短间隔 只和必须是 Milliseconds(5000) 倍数
 
     //时间框框是15  每次滑动10各单位,只计算 属于自己窗口的数据, 不进行累加,如果是全新的话 建议相同
-    val windowedWordCounts = pairs.reduceByKeyAndWindow((a:Int,b:Int) => (a + b), Seconds(15), Seconds(10))
+    val windowedWordCounts = pairs.reduceByKeyAndWindow((a: Int, b: Int) => (a + b), Seconds(15), Seconds(10))
     //Map((hello, 5), (jerry, 2), (kitty, 3))
     windowedWordCounts.print()
     //    val a = windowedWordCounts.map(_._2).reduce(_+_)
@@ -32,6 +32,11 @@ object WindowFunction {
     //    windowedWordCounts.print()
     //    //result.print()
     ssc.start()
+
     ssc.awaitTermination()
+    scala.sys.addShutdownHook({
+      ssc.stop(true, true
+      )
+    })
   }
 }
