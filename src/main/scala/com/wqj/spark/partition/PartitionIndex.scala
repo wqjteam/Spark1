@@ -15,6 +15,8 @@ object PartitionIndex {
     val sc = new SparkContext(conf)
     val rdd1 = sc.parallelize(List(1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 12, 34, 56, 76, 798, 898, 10), 3)
     //    println(rdd1.partitions.size)
+    val b=Array("2","3")
+//    rdd1.partitionBy(new CustomPartition(b))
     val rdd2=rdd1.mapPartitionsWithIndex((a, itear) => {
       val arr = ArrayBuffer[(Int,Int)]()
       while (itear.hasNext) {
