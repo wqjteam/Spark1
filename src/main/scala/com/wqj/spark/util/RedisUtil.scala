@@ -16,7 +16,7 @@ object RedisUtil extends Serializable {
   conf.setMaxIdle(5)
   //调用boeeow Object时,进行检查
   conf.setTestOnBorrow(true)
-  val redisHost = "kafka"
+  val redisHost = "hadoop1"
   val redisPort = 6379
   val redisTimeout = 30000
   val password = "123456"
