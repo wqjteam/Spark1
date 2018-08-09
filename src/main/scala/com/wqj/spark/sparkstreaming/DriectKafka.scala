@@ -1,5 +1,6 @@
 package com.wqj.spark.sparkstreaming
 
+import com.alibaba.fastjson.{JSON, JSONObject}
 import com.wqj.spark.util.RedisUtil
 import kafka.serializer.StringDecoder
 import org.apache.spark.SparkConf
@@ -53,9 +54,12 @@ object DriectKafka {
 
   def dealMessage(rdd: RDD[(String, String)]): Unit = {
     rdd.foreach(x=>{
-     val mapper= new ObjectMapper()
-      mapper.
-      println(x._1+"|"+x._2)
+      for(y<-x._2){
+    print(y)
+      }
+//     val fastJson=new JSONObject()
+//      fastJson.
+
     })
     rdd.foreachPartition(x => {
       val jedis=RedisUtil.pool.getResource
