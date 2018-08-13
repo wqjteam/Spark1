@@ -10,3 +10,6 @@ class Student(var id: String,var name: String) {
     this("1","ad")
   }
 }
+
+
+
