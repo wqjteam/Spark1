@@ -183,23 +183,8 @@
                 <!--</nonFilteredFileExtensions>-->
                 <!--</configuration>-->
             </plugin>
-            <plugin>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                    </resource>
-                    <resource>
-                        <directory>${project.basedir}/keystore</directory>
-                        <targetPath>keystore</targetPath>
-                        <filtering>false</filtering>
-                        <includes>
-                            <include>**/*.jks</include>
-                        </includes>
-                    </resource>
-                </resources>
-            </plugin>
+
 
         </plugins>
     </build>
-    <!--打包是尽量不带上已有的jar包 -->
 </project>
