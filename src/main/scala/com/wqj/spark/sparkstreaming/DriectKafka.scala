@@ -1,13 +1,13 @@
 package com.wqj.spark.sparkstreaming
 
-import com.alibaba.fastjson.{JSON, JSONObject}
+import com.alibaba.fastjson.JSON
 import com.wqj.spark.util.RedisUtil
 import kafka.serializer.StringDecoder
 import org.apache.spark.SparkConf
 import org.apache.spark.rdd.RDD
 import org.apache.spark.streaming.kafka.KafkaManager
 import org.apache.spark.streaming.{Seconds, StreamingContext}
-import org.codehaus.jackson.map.ObjectMapper
+import redis.clients.jedis.{Jedis, JedisPool}
 
 /**
   * @Auther: wqj
@@ -53,21 +53,27 @@ object DriectKafka {
 
 
   def dealMessage(rdd: RDD[(String, String)]): Unit = {
-    rdd.foreach(x=>{
-      for(y<-x._2){
-    print(y)
-      }
-//     val fastJson=new JSONObject()
-//      fastJson.
-
-    })
+//    rdd.foreach(x=>{
+//      println("输入|||||"+JSON.parse(x._2)+"|||||")
+//      x
+//
+//    })
     rdd.foreachPartition(x => {
       val jedis=RedisUtil.pool.getResource
       jedis.select(3);
-      println(x)
+      x.foreach(y=>{
+        val value= JSON.parseObject(y._2)
+
+        println(JSON.parseObject(value.getString("data"),classOf[Student]))
+      })
+
     })
     //    println(rdd.collect().toBuffer);
   }
 
+def redis(obj:Any,jedis:Jedis):Unit={
+  jedis.set("key",obj.toString)
+}
 
+//  def mysql
 }

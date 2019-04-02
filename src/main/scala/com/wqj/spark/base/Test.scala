@@ -1,5 +1,6 @@
 package com.wqj.spark.base
 
+import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SparkSession
 
 /**
@@ -17,19 +18,25 @@ object Test {
 //      .enableHiveSupport()
       .master("local[2]")
       .getOrCreate()
-    for(x <- 0 to 20){
-      print(x)
-    }
-//    val rdd1 = spark.sparkContext.parallelize(Array("a", "a", "b", "c", "d", "f", "t", "g", "f", "g", "f"), 3)
-//    val rdd2 = rdd1.map(x => {
-//      (x, 1)
-//    }).reduceByKey((x, y) => {
-//      x + y
-//    })
-//
-//    val rdd3 = rdd1.map(x => {
-//      (x, 1)
-//    }).groupByKey()
+//    for(x <- 0 to 20){
+//      print(x)
+//    }
+    val rdd1 = spark.sparkContext.parallelize(Array("a", "a", "b", "c", "d", "f", "t", "g", "f", "g", "f"), 3)
+    val rdd2 = rdd1.map(x => {
+      (x, 1)
+    }).reduceByKey((x, y) => {
+      x + y
+    })
+
+    val rdd3 = rdd1.map(x => {
+      (x, 1)
+    }).groupByKey()
+    //添加缓存
+    rdd1.persist()
+
+    val cacherdd: RDD[String] = rdd1.cache()
+    //释放缓存
+    val unpersist: RDD[String] = cacherdd.unpersist()
 //    rdd2.saveAsTextFile("/user/result/2")
 //    rdd3.saveAsTextFile("/user/result/3")
 //    println("rdd2"+rdd2.toBuffer)
