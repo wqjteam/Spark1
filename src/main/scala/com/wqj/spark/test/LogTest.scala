@@ -25,7 +25,7 @@ object LogTest {
       .getOrCreate()
     val log = org.apache.log4j.LogManager.getLogger("ParquetReader")
     for (i <- 0 until 1000){
-      new ObjectId()
+      println("输出的随机id:"+new ObjectId())
 
     }
 //    val rdd1: RDD[String] = sparkSession.sparkContext.parallelize(Array("a", "b", "c", "d", "f"), 2)
